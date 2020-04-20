@@ -1,1 +1,1 @@
-nodemon app.js
+nodemon start.js
