@@ -35,11 +35,30 @@ app.use(cookieParser());
 
 // Sessions allow us to store data on visitors from request to request
 // This keeps users logged in and allows us to send flash messages
+// app.use(session({
+//   secret: process.env.SECRET,
+//   key: process.env.KEY,
+//   resave: false,
+//   saveUninitialized: false,
+//   store: new MongoStore({ mongooseConnection: mongoose.connection })
+// }));
+
+// check environment correctly setup
+if (process.env.KEY !== 'caffiene24by7') {
+  console.log('Environment not correctly set')
+} else {
+  console.log(`Our Session Secret ?  ${process.env.SECRET}`);
+  console.log(`Our Session Key ?  ${process.env.KEY}`);
+  console.log(`Our Map Key ?  ${process.env.MAP_KEY}`);
+
+}
+
+// Use this instead
 app.use(session({
-  secret: process.env.SECRET,
+  secret: process.env.SECRET,   
   key: process.env.KEY,
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
