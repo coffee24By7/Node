@@ -60,8 +60,11 @@ exports.editStore = async (req, res) => {
   const store = await Store.findOne({ _id: req.params.id });
   // 2. confirm they are the owner of the store
   // TODO
+  console.log("Editing store");
+
   // 3. Render out the edit form so the user can update their store
   res.render('editStore', { title: `Edit ${store.name}`, store });
+
 };
 
 exports.updateStore = async (req, res) => {
@@ -75,4 +78,10 @@ exports.updateStore = async (req, res) => {
   req.flash('success', `Successfully updated <strong>${store.name}</strong>. <a href="/stores/${store.slug}">View Store →</a>`);
   res.redirect(`/stores/${store._id}/edit`);
   // Redriect them the store and tell them it worked
+};
+
+exports.getStoreBySlug = async (req, res, next) => {
+  const store = await Store.findOne({ slug: req.params.slug });
+  if (!store) return next();
+  res.render('store', { store, title: store.name });
 };
