@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/../variables.env' });
+require('dotenv').config({ path: __dirname + '../variables.env' });
 const fs = require('fs');
 
 const mongoose = require('mongoose');
@@ -16,7 +16,7 @@ const reviews = JSON.parse(fs.readFileSync(__dirname + '/reviews.json', 'utf-8')
 const users = JSON.parse(fs.readFileSync(__dirname + '/users.json', 'utf-8'));
 
 async function deleteData() {
-  console.log('😢😢 Goodbye Data...');
+  console.log('Goodbye Data...');
   await Store.remove();
   await Review.remove();
   await User.remove();
@@ -29,10 +29,10 @@ async function loadData() {
     await Store.insertMany(stores);
     await Review.insertMany(reviews);
     await User.insertMany(users);
-    console.log('👍👍👍👍👍👍👍👍 Done!');
+    console.log('Done!');
     process.exit();
   } catch(e) {
-    console.log('\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n');
+    console.log('\n Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n');
     console.log(e);
     process.exit();
   }
