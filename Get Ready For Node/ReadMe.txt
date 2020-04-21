@@ -15,7 +15,7 @@ npm install --save express
 copy the files from the DownloadsForClass\Site forlder
 
 REM Call this cmd 
-PrepareNodeModules.cmd
+PrepareNodeModules.cmd or npm install
 
 REM This will run for a while and will do a lot of things to your folder to get it ready.  
 REM Dont worry about warnings and errors.   For the most part it gets past them.

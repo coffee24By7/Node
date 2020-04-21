@@ -22,6 +22,7 @@ exports.homePage = (req, res) => {
 };
 
 exports.addStore = (req, res) => {
+  console.log("Adding store");
   res.render('editStore', { title: 'Add Store' });
 };
 

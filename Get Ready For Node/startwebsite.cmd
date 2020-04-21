@@ -1,1 +1,1 @@
-node start.js
+npm start
