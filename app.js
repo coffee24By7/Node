@@ -47,9 +47,9 @@ app.use(cookieParser());
 if (process.env.KEY !== 'caffiene24by7') {
   console.log('Environment not correctly set')
 } else {
-  console.log(`Our Session Secret ?  ${process.env.SECRET}`);
-  console.log(`Our Session Key ?  ${process.env.KEY}`);
-  console.log(`Our Map Key ?  ${process.env.MAP_KEY}`);
+  //console.log(`Our Session Secret ?  ${process.env.SECRET}`);
+  //console.log(`Our Session Key ?  ${process.env.KEY}`);
+  //console.log(`Our Map Key ?  ${process.env.MAP_KEY}`);
 
 }
 
