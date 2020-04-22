@@ -1,0 +1,2 @@
+startmogo
+startwebsite
