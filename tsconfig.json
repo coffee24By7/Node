@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "allowJs": true,
+        "target": "es5",
+        "lib": [
+            "es6",
+            "DOM"
+        ],
+        "rootDir": "src",
+        "module": "CommonJS",
+        "sourceMap": true,
+        "moduleResolution": "Node"
+    },
+    "include": [
+        "./src/**/*",
+        // "./node_modules"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "_dist"
+    ]
+}
