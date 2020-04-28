@@ -9,19 +9,20 @@ services:
       - variables.env
     networks:
       - deliciousnet
-  node:
-    image: delicious:0.1.1
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "127.0.0.1:7777:7777"
-    env_file: 
-      - variables.env
-    volumes: 
-      - ./app:/delicious/app
-    networks:
-      - deliciousnet
+  # node:
+  #   image: delicious:0.1.1
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "127.0.0.1:7777:7777"
+  #   env_file: 
+  #     - variables.env
+  #   volumes: 
+  #     - ./src:/src
+  #     - ./dist:/dist
+  #   networks:
+  #     - deliciousnet
 networks:
   deliciousnet:
     driver: bridge

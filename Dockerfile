@@ -1,12 +1,17 @@
 FROM node:latest
 
-RUN mkdir /delicious
+RUN mkdir /src
 
-COPY ./package.json /delicious
-COPY ./webpack.config.js /delicious
+COPY ./package.json /src
+COPY ./webpack.config.js /src
+COPY ./tsconfig.json /src
+COPY ./variables.env /src
+COPY ./webpack.config.js /src
+COPY ./start.sh /src
 
-WORKDIR "/delicious"
+WORKDIR "/src"
 
 RUN npm install
 
-ENTRYPOINT ["npm", "start"]
+# ENTRYPOINT ["npm", "run", "start:dev"]
+CMD ["./start.sh"]

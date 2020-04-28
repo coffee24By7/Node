@@ -13,6 +13,12 @@ const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 
+const styles_path = path.join(__dirname, 'styles', 'css');
+const js_path = path.join('dist');
+
+console.log(`styles_path: ${styles_path}`);
+console.log(`js_path: ${js_path}`);
+
 // create our Express app
 const app = express();
 
@@ -21,7 +27,8 @@ app.set('views', path.join(__dirname, 'views')); // this is the folder where we 
 app.set('view engine', 'pug'); // we use the engine pug, mustache or EJS work great too
 
 // serves up static files from the public folder. Anything in public/ will just be served up as the file it is
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js',  express.static(js_path));
+app.use('/css', express.static(styles_path));
 
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
