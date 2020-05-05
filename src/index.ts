@@ -1,5 +1,5 @@
-// import environmental variables from our variables.env file
 const config = require('dotenv').config().parsed;
+
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -140,5 +140,5 @@ const server = app.listen(app.get('port'), () => {
   console.log(`Express running ? PORT ${server.address().port}`);
 });
 
-// done! we export it so we can start the site in start.js
-module.exports = app;
+// // done! we export it so we can start the site in start.js
+// module.exports = app;

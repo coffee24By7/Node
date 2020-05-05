@@ -1,20 +1,22 @@
 {
     "compilerOptions": {
+        "rootDir": "./src",
+        "baseUrl": "/",
         "outDir": "./dist",
         "allowJs": true,
         "target": "es5",
         "lib": [
-            "es6",
-            "DOM"
+            "es2017",
+			"dom",
+			"esnext"
         ],
-        "rootDir": "src",
-        "module": "CommonJS",
+        "module": "esnext",
         "sourceMap": true,
-        "moduleResolution": "Node"
+        "moduleResolution": "Node",
+        "declaration": false,
     },
-    "include": [
-        "./src/**/*",
-        // "./node_modules"
+    "files": [
+        "./src/index.ts"
     ],
     "exclude": [
         "node_modules",

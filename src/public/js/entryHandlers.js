@@ -33,9 +33,8 @@ exports.autocomplete = (input, latInput, lngInput) => {
       }
     });
   
-  }
+}
 
-  const entryHandler = require('../handlers/entryHandlers');
-
-  entryHandler.autocomplete( res.address, res.location.lat, res.location.lng );
+// const entryHandler = require('./entryHandlers');
+// entryHandler.autocomplete( res.address, res.location.lat, res.location.lng );
 
