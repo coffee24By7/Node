@@ -5,14 +5,16 @@ const fs = require('fs');
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin, ContextReplacementPlugin } = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+
 const WebpackShellPlugin = require('webpack-shell-plugin');
+const NodemonPlugin = require('nodemon-webpack-plugin');
 
 //consts
 const projectRoot       = process.cwd();
 const node_modules_dir  = path.join(projectRoot, "/node_modules");
 const dist_path = path.join(projectRoot, "/dist"); 
 
-console.log(`dist_path: ${dist_path}`);
+// console.log(`dist_path: ${dist_path}`);
 
 // webpack is cranky about some packages using a soon to be deprecated API. shhhhhhh
 process.noDeprecation = true;
@@ -53,7 +55,8 @@ module.exports = {
       { test: /\.tsx?$/, loader: "awesome-typescript-loader" }
     ]
   },
-  plugins: [                                
+  plugins: [ 
+    
     new NoEmitOnErrorsPlugin(),            
     new ContextReplacementPlugin(/.*/),
     new ProgressPlugin(),
@@ -63,7 +66,8 @@ module.exports = {
 			'onDetected': false,
 			'cwd': projectRoot
     }),
-    new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['nodemon --inspect=0.0.0.0:9229 --watch dist/app.bundle.js -V -L']})
+    new NodemonPlugin()
+    // new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:[`nodemon --inspect=0.0.0.0:9229 --watch ${dist_path}/dist/app.bundle.js -V -L`]})
   ],
   'node': {
 		'fs': 'empty',

@@ -872,10 +872,8 @@ exports.menu = [
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(__dirname, process) {var express = __webpack_require__(/*! express */ "express");
-var session = __webpack_require__(/*! express-session */ "express-session");
-var mongoose = __webpack_require__(/*! mongoose */ "mongoose");
-// const MongoStore = require('connect-mongo')(session);
+/* WEBPACK VAR INJECTION */(function(process, global) {// import environmental variables from our variables.env file
+var config = __webpack_require__(/*! dotenv */ "dotenv").config().parsed;
 var path = __webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");
 var cookieParser = __webpack_require__(/*! cookie-parser */ "cookie-parser");
 var bodyParser = __webpack_require__(/*! body-parser */ "body-parser");
@@ -886,18 +884,43 @@ var expressValidator = __webpack_require__(/*! express-validator */ "express-val
 var routes = __webpack_require__(/*! ./routes/index */ "./src/routes/index.js");
 var helpers = __webpack_require__(/*! ./helpers */ "./src/helpers.js");
 var errorHandlers = __webpack_require__(/*! ./handlers/errorHandlers */ "./src/handlers/errorHandlers.js");
-var styles_path = path.join(__dirname, 'styles', 'css');
-var js_path = path.join('dist');
-console.log("styles_path: " + styles_path);
-console.log("js_path: " + js_path);
+var express = __webpack_require__(/*! express */ "express");
+var session = __webpack_require__(/*! express-session */ "express-session");
+var mongoose = __webpack_require__(/*! mongoose */ "mongoose");
+//constants
+var STYLES_PATH = './src/styles/css';
+var JS_PATH = './dist';
+var VIEW_PATH = path.join('./src/views');
+if (config.LOG_LEVEL > 0) {
+    console.log('config: ');
+    console.log(config);
+    console.log("CWD: " + process.cwd());
+    console.log("VIEW_PATH: " + VIEW_PATH);
+    console.log("STYLES_PATH: " + STYLES_PATH);
+    console.log("JS_PATH: " + JS_PATH);
+    console.log("process.env.DATABASE: " + config.DATABASE);
+}
+// const MongoStore = require('connect-mongo')(session);
+// // Make sure we are running node 7.6+
+// const [major, minor] = process.versions.node.split('.').map(parseFloat);
+// if (major < 7 || (major === 7 && minor <= 5)) {
+//   console.log('\nHey You! \n\t ya you! \n\t\tBuster! \n\tYou\'re on an older version of node that doesn\'t support the latest and greatest things we are learning (Async + Await)! Please go to nodejs.org and download version 7.6 or greater. ??\n ');
+//   process.exit();
+// }
+// Connect to our Database and handle any bad connections
+mongoose.connect(config.DATABASE);
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on('error', function (err) {
+    console.error(" " + err.message);
+});
 // create our Express app
 var app = express();
 // view engine setup
-app.set('views', path.join(__dirname, 'views')); // this is the folder where we keep our pug files
+app.set('views', VIEW_PATH); // this is the folder where we keep our pug files
 app.set('view engine', 'pug'); // we use the engine pug, mustache or EJS work great too
 // serves up static files from the public folder. Anything in public/ will just be served up as the file it is
-app.use('/js', express.static(js_path));
-app.use('/css', express.static(styles_path));
+app.use('/js', express.static(JS_PATH));
+app.use('/css', express.static(STYLES_PATH));
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -915,18 +938,18 @@ app.use(cookieParser());
 //   store: new MongoStore({ mongooseConnection: mongoose.connection })
 // }));
 // check environment correctly setup
-if (process.env.KEY !== 'caffiene24by7') {
+if (config.KEY !== 'caffiene24by7') {
     console.log('Environment not correctly set');
 }
 else {
-    console.log("Our Session Secret ?  " + process.env.SECRET);
-    console.log("Our Session Key ?  " + process.env.KEY);
-    console.log("Our Map Key ?  " + process.env.MAP_KEY);
+    console.log("Our Session Secret ?  " + config.SECRET);
+    console.log("Our Session Key ?  " + config.KEY);
+    console.log("Our Map Key ?  " + config.MAP_KEY);
 }
 // Use this instead
 app.use(session({
-    secret: process.env.SECRET,
-    key: process.env.KEY,
+    secret: config.SECRET,
+    key: config.KEY,
     resave: true,
     saveUninitialized: true
     // ,store: new MongoStore({ mongooseConnection: mongoose.connection })
@@ -962,10 +985,15 @@ if (app.get('env') === 'development') {
 }
 // production error handler
 app.use(errorHandlers.productionErrors);
+// Start our app!
+app.set('port', config.PORT || 7777);
+var server = app.listen(app.get('port'), function () {
+    console.log("Express running ? PORT " + server.address().port);
+});
 // done! we export it so we can start the site in start.js
 module.exports = app;
 
-/* WEBPACK VAR INJECTION */}.call(this, "/", __webpack_require__(/*! ./../node_modules/node-libs-browser/node_modules/process/browser.js */ "./node_modules/node-libs-browser/node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/node-libs-browser/node_modules/process/browser.js */ "./node_modules/node-libs-browser/node_modules/process/browser.js"), __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -1112,6 +1140,17 @@ module.exports = require("connect-flash");
 /***/ (function(module, exports) {
 
 module.exports = require("cookie-parser");
+
+/***/ }),
+
+/***/ "dotenv":
+/*!*************************!*\
+  !*** external "dotenv" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("dotenv");
 
 /***/ }),
 
