@@ -18,7 +18,7 @@
   "dependencies": {
     "@google/maps": "^1.1.0",
     "autocomplete": "0.0.1",
-    "axios": "0.15.3",
+    "axios": "0.21.1",
     "bling": "^0.12.0",
     "body-parser": "1.17.1",
     "connect-flash": "0.1.1",
